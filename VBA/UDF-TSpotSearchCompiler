@@ -1,4 +1,14 @@
-#User Defined Function - "TSPOTSearchCompiler
+# User Defined Function - "TSPOTSearchCompiler
+# I create formulas within Thoughtspot an AI-powered business intelligence platform for uses in reports.
+# One of my key formulas is as follows, which searches the given customer name 'Tyco' against the field 'Sold to customer name (cust)' using different methods.
+# ( Sold to customer name (cust) = 'Tyco ' ) or contains ( Sold to customer name (cust) , ' Tyco  ' ) or ( Left ( Sold to customer name (cust) , 6 ) = 'Tyco  ' ) or...
+# This would be done multiple times for different customers and also against the field 'end cust. name'. I needed a formula that would allow me to do it quickly for a list of customer names.
+# I'm currently using a defined function, this way i can more flexible with when i use it. I could save a template and then replace the text when needed, but i don't always need both 'Sold to...' and  'End Cust. name'.
+
+# My defined functions includes two arguments, the first being the string to to be searched and the an argument to define the preferred results {1 : Sold to , 2: End Cus , 3:  Sold Cus & End Cust}
+
+Stored = TSPOTSearchCompiler.Function.bas
+
 Attribute VB_Name = "TSPOTSearchCompiler"
 Function TSPOTsearch(searchstring As String, SorE As Integer) As String
     ' Declare variables
