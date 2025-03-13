@@ -1,0 +1,53 @@
+Attribute VB_Name = "TSPOTSearchCompiler"
+Function TSPOTsearch(searchstring As String, SorE As Integer) As String
+    ' Declare variables
+    Dim SorEText As String
+    Dim ExactStep As String
+    Dim ContainStep As String
+    Dim LeftStep As String
+    Dim stringlength As Integer
+    Dim SoldResult As String
+    Dim EndResult As String
+    Dim TSPOTsearchResult As String
+    
+    ' Set SorEText based on SorE value
+    If SorE = 1 Then
+        SorEText = "Sold to customer name (cust)"
+    ElseIf SorE = 2 Then
+        SorEText = "End Cust. Name"
+    ElseIf SorE = 3 Then
+        SorEText = "Sold to customer name (cust)" ' We will add both conditions for SorE = 3
+    Else
+        SorEText = "Invalid input"
+        TSPOTsearchResult = "Invalid input"
+        TSPOTsearch = TSPOTsearchResult
+        Exit Function
+    End If
+
+    ' Define the search steps after SorEText is set
+    ExactStep = "( " & SorEText & " = '" & searchstring & "' )"
+    ContainStep = " contains ( " & SorEText & " , ' " & searchstring & " ' )"
+    stringlength = Len(searchstring) + 1
+    LeftStep = " ( Left ( " & SorEText & " , " & stringlength & " ) = '" & searchstring & " ' )"
+    
+    ' Now set the results based on the SorE value
+    If SorE = 1 Then
+        SoldResult = ExactStep & " or " & ContainStep & " or " & LeftStep
+        TSPOTsearchResult = SoldResult
+    ElseIf SorE = 2 Then
+        EndResult = ExactStep & " or " & ContainStep & " or " & LeftStep
+        TSPOTsearchResult = EndResult
+    ElseIf SorE = 3 Then
+        ' For SorE = 3, combine both Sold and End Customer results
+        SoldResult = ExactStep & " or " & ContainStep & " or " & LeftStep
+        SorEText = "End Cust. Name" ' Now change SorEText for End Customer
+        ExactStep = "( " & SorEText & " = '" & searchstring & "' )"
+        ContainStep = " contains ( " & SorEText & " , ' " & searchstring & " ' )"
+        LeftStep = " ( Left ( " & SorEText & " , " & stringlength & " ) = '" & searchstring & " ' )"
+        EndResult = ExactStep & " or " & ContainStep & " or " & LeftStep
+        TSPOTsearchResult = SoldResult & " or " & EndResult
+    End If
+    
+    ' Return result
+    TSPOTsearch = TSPOTsearchResult
+End Function
