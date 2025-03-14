@@ -1,1 +1,11 @@
+# Although i have no issue with writing this formula with a VBA, i frequently work with colleagues who aren't proficient in it's use.
+# This project is to put all the calculations into a simple excel formula, meaning that they only need input the values
+# The excel formula is as follows...'= Round((Cost * Mark_up)/Unit,decimal place)'
+# Issues faced include people rounding before diving by the unit cost and using variations of round like round up.
 
+Stored = FinalPriceCalculator.Function.bas
+
+Attribute VB_Name = "FinalPriceCalculator"
+Function FinalPriceCal( Cost As Double, Unit As Integer, mark_up As Double, Decimal_place As Integer) As Double
+    FinalPriceCal = Round((Cost * Mark_up) / Unit, DecimalPlace)
+End Function
