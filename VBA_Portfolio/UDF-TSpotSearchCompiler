@@ -10,7 +10,7 @@
 Stored = TSPOTSearchCompiler.Function.bas
 
 Attribute VB_Name = "TSPOTSearchCompiler"
-Function TSPOTsearch(searchstring As String, SorE As Integer) As String
+Function TSPOTsearch(searchstring As String, SorE As Integer, Multi As Integer) As String
     ' Declare variables
     Dim SorEText As String
     Dim ExactStep As String
@@ -29,8 +29,8 @@ Function TSPOTsearch(searchstring As String, SorE As Integer) As String
     ElseIf SorE = 3 Then
         SorEText = "Sold to customer name (cust)" ' We will add both conditions for SorE = 3
     Else
-        SorEText = "Invalid input"
-        TSPOTsearchResult = "Invalid input"
+        SorEText = "invalid SorE input"
+        TSPOTsearchResult = "invalid SorE input"
         TSPOTsearch = TSPOTsearchResult
         Exit Function
     End If
@@ -59,6 +59,14 @@ Function TSPOTsearch(searchstring As String, SorE As Integer) As String
         TSPOTsearchResult = SoldResult & " or " & EndResult
     End If
     
-    ' Return result
-    TSPOTsearch = TSPOTsearchResult
+    ' Return result adding a or if the formula is used for multiple search terms, as specified in multi argument
+    If Multi = 0 Then
+        TSPOTsearch = TSPOTsearchResult
+    ElseIf Multi = 1 Then
+        TSPOTsearch = TSPOTsearchResult & " or  "
+    Else
+        TSPOTsearchResult = "invalid multi input"
+        TSPOTsearch = TSPOTsearchResult
+        Exit Function
+    End If
 End Function
